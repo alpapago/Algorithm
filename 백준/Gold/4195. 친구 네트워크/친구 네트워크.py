@@ -10,21 +10,21 @@ def find(x):
     if x == parent[x]:
         return x
     else:
-        p=find(parent[x])
+        p = find(parent[x])
         parent[x]=p
         return parent[x]
 
 
-tc = int(input())
+test_case = int(input())
 
-for _ in range(tc):
-    parent=dict()
-    number=dict()
+for _ in range(test_case):
+    parent = dict()
+    number = dict()
+    
+    f = int(input())
 
-    n= int(input())
-
-    for _ in range(n):
-        x,y = input().split(' ')
+    for _ in range(f):
+        x,y=input().split(' ')
         
         if x not in parent:
             parent[x]=x
@@ -32,6 +32,6 @@ for _ in range(tc):
         if y not in parent:
             parent[y]=y
             number[y]=1
-    
+
         union(x,y)
         print(number[find(x)])
