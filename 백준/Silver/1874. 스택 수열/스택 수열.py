@@ -1,20 +1,21 @@
-n=int(input())
+n = int(input())
 
-count=1
-stack=[]
-result=[]
+result = []
+stack = []
+i = 1
 
-for i in range(n):
-    x = int(input())
-    while count<=x:
-        stack.append(count)
+for _ in range(n):
+    num = int(input())
+
+    while i<=num:
+        stack.append(i)
         result.append('+')
-        count+=1
-    if stack[-1] == x:
+        i+=1
+    if num == stack[-1]:
         stack.pop()
         result.append('-')
     else:
         print('NO')
         exit(0)
-            
+
 print('\n'.join(result))
