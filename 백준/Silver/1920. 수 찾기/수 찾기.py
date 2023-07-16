@@ -1,10 +1,13 @@
-n=int(input())
-arr1=set(map(int,input().split(' ')))
-m=int(input())
-arr2 = list(map(int,input().split(' ')))
+import sys
+input = sys.stdin.readline
 
-for i in arr2:
-    if i in arr1:
-        print('1')
+a = int(input())
+sett = set(map(int,input().split( ))) #중복 없이 자료 저장해줌.
+b = int(input())
+listt = list(map(int,input().split( )))
+
+for i in listt:
+    if i not in sett:
+        print("0")
     else:
-        print('0')
+        print("1")
