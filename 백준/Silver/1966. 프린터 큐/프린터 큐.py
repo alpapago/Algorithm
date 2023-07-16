@@ -1,26 +1,29 @@
-import sys
-input = sys.stdin.readline
+tc = int(input())
 
-testcase = int(input())
+result = []
 
-for _ in range(testcase):
+for _ in range(tc):
+    n,m = map(int,input().split())
+    data = list(map(int,input().split()))
+    # i : 중요도 / idx : 인덱스
+    data = [(i,idx) for idx,i in enumerate(data)]
 
-    n, k = map(int, input().split(' '))
-    arr = list(map(int, input().split(' ')))
-    q = [(i,idx) for idx,i in enumerate(arr)]
-
-    cnt = 0
-
+    cnt = 1
     while True:
-        if q[0][0] == max(q,key = lambda x:x[0])[0]: #배열을 큐 처럼 사용. 우선순위 젤 높은거 찾기.
-            cnt+=1 #우선순위가 젤 높아서 일단 해당원소를 빼야하니까 카운트 1회
-            #근데 인덱스가 k값이 맞는지 확인
-            if q[0][1] == k:
-                print(cnt)
-                break #정답 프린트 하고 종료
+        #뽑은 원소가 data배열 중에 중요도가 최대라면? pop해야지
+        if data[0][0] == max(data,key=lambda x:x[0])[0]:
+            #근데 원하는 index의 값이 아냐? 1번 카운트 하고 pop해야지
+            if data[0][1] != m:
+                cnt+=1
+                data.pop(0)
+            #원하는 인덱스야? 그러면 result에 추가해야지
             else:
-                #인덱스가 k값 아니라도 popleft는 해야함.
-                q.pop(0)
-        else: #우선순위 젤 높지 않다면,
-            #뱅글뱅글
-            q.append(q.pop(0))
+                result.append(cnt)
+                break
+        #뽑은 원소가 data배열 중 중요도 최대값이 아니라면?
+        else:
+            #회전을 해야지
+            data.append(data.pop(0))
+
+for i in result:
+    print(i)
