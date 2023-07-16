@@ -1,13 +1,13 @@
-import sys
-input = sys.stdin.readline
+s = input()
 
-arr = [-1]*26
-data = input().strip()
+result =  []
 
-for i in range(len(data)):
-    index = ord(data[i])-ord('a')
-    if arr[index]==-1:
-        arr[index]=i
+for i in range(97,123):
+    if chr(i) in s:
+        result.append(s.index(chr(i)))
+    else:
+        result.append(-1)
 
-for j in arr:
-    print(j, end=' ')
+for i in result:
+    print(i,end=' ')
+    
