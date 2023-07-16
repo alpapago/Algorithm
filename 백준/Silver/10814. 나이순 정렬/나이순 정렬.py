@@ -1,12 +1,12 @@
 n = int(input())
 
-arr=[]
+data = []
 
 for _ in range(n):
-    a,b=input().split()
-    arr.append((int(a),b))
+    age, name = input().split()
+    data.append((int(age),name))
 
-arr.sort(lambda x:x[0])
+data.sort(key= lambda x:x[0])
 
-for i in arr:
+for i in data:
     print(i[0],i[1])
