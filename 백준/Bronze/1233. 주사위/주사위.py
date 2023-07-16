@@ -1,25 +1,15 @@
-import sys
-input = sys.stdin.readline
+a,b,c = map(int,input().split())
 
-s1,s2,s3 = map(int,input().split())
-counter=dict()
+result = [0 for _ in range(a+b+c+1)]
 
-for i in range(1,s1+1):
-    for j in range(1,s2+1):
-        for k in range(1,s3+1):
-            summary = i+j+k
-            if summary not in counter:
-                counter[summary]=1
-            else:
-                counter[summary]+=1
+#합 구하기
+for i in range(1,a+1):
+    for j in range(1,b+1):
+        for k in range(1,c+1):
+            result[i+j+k] +=1
 
-maxi = -1
-answer =int(1e6)
+result = [(i,idx) for idx,i in enumerate(result)]
 
-for (key,value) in counter.items():
-    if maxi <value:
-        maxi= value
-        answer=key
-    elif maxi==value:
-        answer == min(answer,key)
-print(answer)
+result.sort(key= lambda x:x[0],reverse=True)
+
+print(result[0][1])
