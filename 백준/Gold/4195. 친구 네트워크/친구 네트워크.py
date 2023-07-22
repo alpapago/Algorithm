@@ -1,37 +1,40 @@
-def union(x,y):
-    x = find(x)
-    y = find(y)
-
-    if x!=y:
-        parent[y]=x
-        number[x]+=number[y]
-
 def find(x):
     if x == parent[x]:
         return x
     else:
         p = find(parent[x])
-        parent[x]=p
+        parent[x] = p
         return parent[x]
+    
+def union(x,y):
+    x = find(x)
+    y = find(y)
 
+    if x!=y:
+        parent[y] = x
+        number[x] += number[y]
 
-test_case = int(input())
+    
 
-for _ in range(test_case):
+t = int(input())
+
+for _ in range(t):
+    
     parent = dict()
     number = dict()
     
-    f = int(input())
+    k = int(input())
 
-    for _ in range(f):
-        x,y=input().split(' ')
+    for _ in range(k):
+        name1,name2 = input().split(' ')
         
-        if x not in parent:
-            parent[x]=x
-            number[x]=1
-        if y not in parent:
-            parent[y]=y
-            number[y]=1
+        if name1 not in parent:
+            parent[name1] = name1
+            number[name1] = 1
+        if name2 not in parent:
+            parent[name2] = name2
+            number[name2] = 1
+        
+        union(name1,name2)
 
-        union(x,y)
-        print(number[find(x)])
+        print(number[find(name1)])
