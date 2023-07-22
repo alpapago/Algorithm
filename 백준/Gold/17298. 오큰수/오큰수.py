@@ -1,21 +1,24 @@
 n = int(input())
-arr = list(map(int,input().split()))
-stack=[]
-result=[-1]*n
+data = list(map(int,input().split(' ')))
 
-for i in range(n):
-    x=arr[i]
-    if len(stack)==0  or stack[-1][0]>=x:
-        stack.append((x,i))
-    else:
-        while len(stack)>0:
-            previous, index =stack.pop()
-            if previous >=x:
-                stack.append((previous,index))
+result = [-1]
+stack = [data[-1]]
+
+for i in range(len(data)-2,-1,-1):
+    while True:
+        if len(stack) == 0:
+            result.append(-1)
+            stack.append(data[i])
+            break
+        else:
+            if data[i] < stack[-1]:
+                result.append(stack[-1])
+                stack.append(data[i])
                 break
             else:
-                result[index]=x
-        stack.append((x,i))
+                stack.pop()
 
-for x in result:
-    print(x,end=' ')
+result.reverse()
+
+for i in result:
+    print(i,end = ' ')
