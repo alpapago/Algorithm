@@ -1,0 +1,52 @@
+산악구조로봇
+
+import heapq
+ 
+dir = [(0, 1), (0, -1), (1, 0), (-1, 0)]
+ 
+def dijkstra(sy, sx, ey, ex):
+    pq = [(0, sy, sx)]
+    dp = [[float('INF') for _ in range(N)] for _ in range(N)]
+    dp[sy][sx] = 0
+     
+    while pq:
+        fu, cy, cx = heapq.heappop(pq)
+         
+        if fu > dp[cy][cx]:
+            continue
+         
+        for dy, dx in dir:
+            ny, nx = cy + dy, cx + dx
+            if 0 <= ny < N and 0 <= nx < N:
+                now = board[cy][cx]
+                new = board[ny][nx]
+                nextv = fu + (0 if now > new else (1 if now == new else 2 * (new - now)))
+                 
+                if nextv < dp[ny][nx]:
+                    dp[ny][nx] = nextv
+                    heapq.heappush(pq, (nextv, ny, nx))
+         
+        if (cy, cx) in tunnel_dict:
+            ny, nx, cost = tunnel_dict[(cy, cx)]
+            nextv = fu + cost
+             
+            if nextv < dp[ny][nx]:
+                dp[ny][nx] = nextv
+                heapq.heappush(pq, (nextv, ny, nx))
+                 
+    return dp[ey][ex]
+ 
+T = int(input())
+ 
+for tc in range(1, T + 1):
+    N, M = map(int, input().split())
+    board = [list(map(int, input().split())) for _ in range(N)]
+    tunnel_dict = {}
+     
+    for _ in range(M):
+        ay, ax, by, bx, c = map(int, input().split())
+        tunnel_dict[(ay - 1, ax - 1)] = (by - 1, bx - 1, c)
+        tunnel_dict[(by - 1, bx - 1)] = (ay - 1, ax - 1, c)
+     
+    ans = dijkstra(0, 0, N-1, N-1)
+    print(f'#{tc} {ans}')
