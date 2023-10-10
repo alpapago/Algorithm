@@ -1,1 +1,65 @@
 
+스노우맨
+
+from collections import deque
+
+def bfs(limit, start, end, adj_dict, ground):
+    queue = deque([(start, 0)])
+    visited = [False] * len(ground)
+    visited[start] = True
+
+    while queue:
+        now, fuel = queue.popleft()
+        if now == end:
+            return True
+        for next_ground in adj_dict[now]:
+            if not visited[next_ground]:
+                cost = abs(ground[next_ground][0] - ground[now][0])
+                if cost <= limit:
+                    visited[next_ground] = True
+                    queue.append((next_ground, fuel + cost))
+
+    return False
+
+N, M = map(int, input().split())
+board = [list(map(int, input().split())) for _ in range(N)]
+
+ground = []
+snowman, jewelry = 0, 0
+for y in range(N):
+    start = False
+    for x in range(M):
+        if board[y][x] != 0:
+            if board[y][x] == 2:
+                snowman = len(ground)
+            if board[y][x] == 3:
+                jewelry = len(ground)
+            if start is False:
+                start = x
+            if x == M - 1 and start is not False:
+                ground.append((y, start, x))
+        else:
+            if start is not False:
+                ground.append((y, start, x - 1))
+                start = False
+
+adj_dict = {}
+for now_num, (now_y, now_start_x, now_end_x) in enumerate(ground):
+    adj_list = []
+    for next_num, (next_y, next_start_x, next_end_x) in enumerate(ground):
+        if next_end_x < now_start_x or next_start_x > now_end_x:
+            continue
+        adj_list.append(next_num)
+    adj_dict[now_num] = adj_list
+
+left, right, ans = 0, N - 1, N - 1
+
+while left <= right:
+    mid = (left + right) // 2
+    if bfs(mid, jewelry, snowman, adj_dict, ground):
+        ans = mid
+        right = mid - 1
+    else:
+        left = mid + 1
+
+print(ans)
