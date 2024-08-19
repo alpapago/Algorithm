@@ -2,7 +2,7 @@
 
 using namespace std;
 
-const long long INF = LLONG_MAX;  // INF를 LLONG_MAX로 정의
+const long long INF = LLONG_MAX;
 vector<pair<int, int>> adj[802];
 int n, e, v1, v2;
 
