@@ -1,42 +1,43 @@
 #include <algorithm>
 #include <iostream>
+#include <vector>
 
 using namespace std;
 
-int n;
+int n,answer;
 int arr[8];
+bool visit[8] = {false,};
+vector<int> v;
+
+void dfs(int k){
+  
+  if (k == n) {
+    int tmp = 0;
+    for (int i = 0; i<n-1; i++){
+      tmp += abs(v[i]- v[i+1]);
+    }
+    if (tmp>answer){
+      answer = tmp;
+    }
+    return;
+  }
+  for(int i=0; i<n; i++){
+    if (visit[i] == true){
+      continue;
+    }
+    visit[i] = true;
+    v.push_back(arr[i]);
+    dfs(k+1);
+    visit[i] = false;
+    v.pop_back();
+  }
+}
 
 int main() {
   cin >> n;
   for (int i = 0; i < n; i++) {
     cin >> arr[i];
   }
-  sort(arr, arr + n);
-  int answer = 0;
-
-  // even
-  
-  if (n % 2 == 0) {
-
-    for (int i = 0; i < n / 2 - 1; i++) {
-      answer += 2 * arr[n - 1 - i];
-      answer -= 2 * arr[i];
-    }
-    answer += (arr[n / 2] - arr[n / 2 - 1]);
-  }
-  // odd
-  if (n>3){
-  if (n % 2 == 1) {
-    for (int i = 0; i < n / 2 - 1; i++) {
-      answer += 2 * arr[n - 1 - i];
-      answer -= 2 * arr[i];
-    }
-    answer += (arr[n / 2] + arr[n / 2 + 1]);
-    answer -= 2*arr[n / 2 - 1];
-  }
-    }
-  if(n == 3){
-    answer = (2*arr[2] - arr[1]- arr[0]);
-  }
+  dfs(0);
   cout << answer;
 }
